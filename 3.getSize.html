@@ -1,0 +1,90 @@
+<html>
+
+<head>
+    <title>getSize</title>
+    <meta charset="UTF-8">
+</head>
+<style>
+    .img_box{
+        width: 180px;
+        height: 300px;
+        background: black;
+        position: relative;
+        overflow: hidden;
+    }
+    .img{
+        position: absolute;
+    }
+</style>
+
+<body>
+    <div class="img_box">
+        <img class="img" />
+    </div>
+    <script>
+        let imgLoader = new Image();
+        var img = document.querySelector('.img'),box = document.querySelector('.img_box');
+        var imgSrc = './pic2.jpg',style = 'cover';
+        imgLoader.src = imgSrc;
+        imgLoader.onload = ()=>{
+            let width = imgLoader.width, height = imgLoader.height;
+            if(style == 'cover'){
+                if(width > height || (width == height && box.offsetWidth < box.offsetHeight)){
+                    img.style.height = '100%';
+                    img.style.left = '50%';
+                    img.style.transform = 'translateX(-50%)';
+                }else if(width < height || (width == height && box.offsetWidth > box.offsetHeight)){
+                    img.style.width = '100%';
+                    img.style.top = '50%';
+                    img.style.transform = 'translateY(-50%)';
+                }else{
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                }
+            }else if(style == 'contain'){
+                if(width > height || (width == height && box.offsetWidth < box.offsetHeight)){
+                    img.style.width = '100%';
+                    img.style.top = '50%';
+                    img.style.transform = 'translateY(-50%)';
+                }else if(width < height || (width == height && box.offsetWidth > box.offsetHeight)){
+                    img.style.height = '100%';
+                    img.style.left = '50%';
+                    img.style.transform = 'translateX(-50%)';
+                }else{
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                }
+            }
+            img.src = imgSrc;
+        }
+        // setImgSize(style);
+        // function setImgSize(style){
+        //     var width = imgLoader.width,height = imgLoader.height;
+        //     img.src = imgSrc;
+        //     if(style == 'cover'){
+        //         if(width > height){
+        //             img.style.height = '100%';
+        //             img.style.left = '50%';
+        //             img.style.transform = 'translateX(-50%)';
+        //         }else if(width < height){
+        //             img.style.width = '100%';
+        //             img.style.top = '50%';
+        //             img.style.transform = 'translateY(-50%)';
+        //         }
+        //     }else if(style == 'contain'){
+        //         if(width > height){
+        //             img.style.width = '100%';
+        //             img.style.top = '50%';
+        //             img.style.transform = 'translateY(-50%)';
+        //         }else if(width < height){
+        //             img.style.height = '100%';
+        //             img.style.left = '50%';
+        //             img.style.transform = 'translateX(-50%)';
+        //         }
+        //     }
+        // }
+            
+    </script>
+</body>
+
+</html>

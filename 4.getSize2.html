@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .img_box{
+        position: relative;
+        width: 300px;
+        height: 180px;
+        overflow: hidden;
+        background-color: black;
+    }
+    img{
+        position: absolute;
+    }
+    </style>
+</head>
+<body>
+    <div class="img_box">
+        <img src="./pic3.jpg"/>
+    </div>
+</body>
+
+<script>
+    let box = document.querySelector('.img_box');
+    setImgSize('cover',box);
+
+    function setImgSize(type,box){
+        let img = box.getElementsByTagName('img')[0];
+        img.onload = () =>{
+            let width = img.offsetWidth, height = img.offsetHeight;
+            if(type == 'cover'){
+                if(width > height || (width == height && box.offsetWidth < box.offsetHeight)){
+                    img.style.height = '100%';
+                    img.style.left = '50%';
+                    img.style.transform = 'translateX(-50%)';
+                }else if(width < height || (width == height && box.offsetWidth > box.offsetHeight)){
+                    img.style.width = '100%';
+                    img.style.top = '50%';
+                    img.style.transform = 'translateY(-50%)';
+                }else{
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                }
+            }else if(type == 'contain'){
+                if(width > height || (width == height && box.offsetWidth < box.offsetHeight)){
+                    img.style.width = '100%';
+                    img.style.top = '50%';
+                    img.style.transform = 'translateY(-50%)';
+                }else if(width < height || (width == height && box.offsetWidth > box.offsetHeight)){
+                    img.style.height = '100%';
+                    img.style.left = '50%';
+                    img.style.transform = 'translateX(-50%)';
+                }else{
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                }
+            }
+        }
+    }
+</script>
+</html>

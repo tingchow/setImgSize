@@ -1,0 +1,66 @@
+<html>
+
+<head>
+    <title>canvas4</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <canvas id="canvas">
+        您的浏览器不支持canvas
+    </canvas>
+    <script> 
+        let canvas =document.getElementById("canvas"),width = 300,height = 180,imgSrc = './pic2.jpg',style = 'contain';
+        // 设置宽高通过js来控制，不要用css
+        canvas.width = width;
+        canvas.height = height;
+        let ctx = canvas.getContext("2d");
+        // 设置背景色为黑色
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, width, height);
+        // 将图片放入canvas中展示
+        let img = new Image();
+        img.onload = ()=>{ 
+            let {startX, startY, lengthWidth, lengthHeight} = setSize(style,width,height,img.width,img.height);
+            ctx.drawImage(img, startX, startY, lengthWidth, lengthHeight, 0, 0, width, height); 
+        }
+        img.src = imgSrc;
+        //注：img预加载模式下，onload应该放在为src赋值的上面，以避免已有缓存的情况下无法触发onload事件从而导致onload中的事件不执行的情况发生
+    
+
+        /*
+         * 设置图片的展示方式
+         * @param {Number} style 确定取最小边还是最长边, box_width 固定盒子的宽, box_height 固定盒子的高
+         * @param {Number} source_width 原图片的宽, source_height 原图片的高
+         * @return {Object} {截取的图片信息}，对应drawImage(imageResource, startX, startY, lengthWidth, lengthHeight, dx, dy, dWidth, dHeight)参数
+        */
+        function setSize(style,box_width, box_height, source_width, source_height){
+            let startX = 0,startY = 0,lengthWidth = source_width,lengthHeight = source_height;
+            if(style == 'cover'){
+                if(source_width > source_height || (source_width == source_height && box_width < box_height)){
+                    lengthWidth = box_width*lengthHeight/box_height;
+                    startX = (source_width - lengthWidth)/2;
+                }else if(source_width < source_height || (source_width == source_height && box_width > box_height)){
+                    lengthHeight = box_height*lengthWidth/box_width;
+                    startY = (source_height-lengthHeight)/2;
+                }else{
+                    lengthWidth = box_width;
+                    lengthWidth = box_height;
+                }
+            }else if(style == "contain"){
+                if(source_width > source_height || (source_width == source_height && box_width < box_height)){
+                    lengthHeight = box_height*lengthWidth/box_width;
+                    startY = (source_height-lengthHeight)/2;
+                }else if(source_width < source_height || (source_width == source_height && box_width > box_height)){
+                    lengthWidth = box_width*lengthHeight/box_height;
+                    startX = (source_width - lengthWidth)/2;
+                }else{
+                    lengthWidth = box_width;
+                    lengthWidth = box_height;
+                }
+            }
+            return {startX,startY,lengthWidth,lengthHeight}
+        }
+    </script>
+</body>
+
+</html>
